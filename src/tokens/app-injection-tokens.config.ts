@@ -1,0 +1,3 @@
+export const APP_INJECTION_TOKENS = {
+    'RANDOM_STRING': 'RANDOM_STRING'
+}

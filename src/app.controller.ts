@@ -1,22 +1,23 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { filter, of } from 'rxjs';
+import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { of } from 'rxjs';
+import { APP_INJECTION_TOKENS } from './tokens/app-injection-tokens.config';
 
 @Controller()
 export class AppController {
-  constructor() {}
+  constructor(
+    @Inject(APP_INJECTION_TOKENS.RANDOM_STRING)
+    private getRandomString: () => string
+  ) {}
 
-  @Get()
-  getHello(): any {
-    return { message: 'hello GL3' };
+  @Get('cc')
+  getHello() {
+    return this.getRandomString();
   }
-  @Get('observable')
-  getObservable(): any {
-    // 1 2 3
-    return of(1, 2, 3).pipe(filter((x) => !(x % 2)));
+  @Get(':something')
+  getSomething(
+    @Param('something') something
+  ) {
+    return something;
   }
-
-  @Post()
-  addHello(): any {
-    return { message: 'POST GL3' };
-  }
+  
 }
