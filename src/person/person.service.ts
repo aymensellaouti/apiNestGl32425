@@ -4,10 +4,10 @@ import { AddPersonDto } from './dto/add-person.dto';
 @Injectable()
 export class PersonService {
   create(addPersonDto: AddPersonDto) {
-    throw new Error('Method not implemented.');
+    return { addPersonDto };
   }
 
   update(id: string, updatePerson: any) {
-    throw new Error('Method not implemented.');
+    return { id, updatePerson };
   }
 }
