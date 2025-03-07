@@ -1,6 +1,7 @@
 import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { AddPersonDto } from './dto/add-person.dto';
+import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Controller('person')
 export class PersonController {
@@ -10,7 +11,7 @@ export class PersonController {
     return this.personService.create(addPersonDto);
   }
   @Patch(':id')
-  onPatch(@Body() updatePerson, @Param('id') id: string) {
+  onPatch(@Body() updatePerson: UpdatePersonDto, @Param('id') id: string) {
     return this.personService.update(id, updatePerson);
   }
 }
