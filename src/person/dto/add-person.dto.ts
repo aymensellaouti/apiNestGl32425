@@ -5,7 +5,7 @@ export class AddPersonDto {
   @IsString()
   @MinLength(5)
   name: string;
-  @IsNumber()
   @Type(() => Number)
+  @IsNumber()
   age: number;
 }

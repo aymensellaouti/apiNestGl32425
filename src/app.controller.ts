@@ -6,18 +6,15 @@ import { APP_INJECTION_TOKENS } from './tokens/app-injection-tokens.config';
 export class AppController {
   constructor(
     @Inject(APP_INJECTION_TOKENS.RANDOM_STRING)
-    private getRandomString: () => string
+    private getRandomString: () => string,
   ) {}
 
   @Get('cc')
   getHello() {
     return this.getRandomString();
   }
-  @Get(':something')
-  getSomething(
-    @Param('something') something
-  ) {
+  @Get('cc/:something')
+  getSomething(@Param('something') something) {
     return something;
   }
-  
 }
