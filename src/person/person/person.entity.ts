@@ -8,21 +8,14 @@ import {
   DeleteDateColumn,
   VersionColumn,
 } from 'typeorm';
+import { TimestampEntity } from '../../db/timestamp.entity';
 
 @Entity('person')
-export class PersonEntity {
+export class PersonEntity extends TimestampEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column({})
   name: string;
   @Column({})
   age: number;
-  @CreateDateColumn({ update: false })
-  created_at: Date;
-  @UpdateDateColumn({ update: false })
-  updated_at: Date;
-  @DeleteDateColumn({ update: false })
-  deleted_at: Date;
-  @VersionColumn()
-  version: number;
 }

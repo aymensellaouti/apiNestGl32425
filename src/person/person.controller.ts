@@ -23,7 +23,7 @@ export class PersonController {
   }
   @Get()
   witchVersion2() {
-    return 'default one';
+    return this.personService.find();
   }
   @Post()
   onPost(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {

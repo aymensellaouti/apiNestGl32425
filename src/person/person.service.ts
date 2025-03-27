@@ -2,26 +2,26 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddPersonDto } from './dto/add-person.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PersonEntity } from './person/person.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
+import { UpdatePersonDto } from './dto/update-person.dto';
+import { GenericCrud } from '../generic-crud.service';
+import { qbDateInterval } from '../db/date-interval-db';
 
 @Injectable()
-export class PersonService {
+export class PersonService extends GenericCrud<PersonEntity> {
   constructor(
     @InjectRepository(PersonEntity)
     private readonly personRepository: Repository<PersonEntity>,
-  ) {}
-  create(addPersonDto: AddPersonDto): Promise<PersonEntity> {
-    return this.personRepository.save(addPersonDto);
+  ) {
+    super(personRepository);
   }
+  /* find(options?: FindManyOptions<PersonEntity>) {
+    return this.personRepository.find();
+  } */
 
-  async update(id: string, updatePerson: any) {
-    const newPerson = await this.personRepository.preload({
-      id,
-      ...updatePerson,
-    });
-    if (!newPerson) {
-      throw new NotFoundException('person innexistant');
-    }
-    return this.personRepository.save(newPerson);
+  findByCreationDate(startDate: Date, endDate: Date) {
+    const qb = this.personRepository.createQueryBuilder('person');
+    qbDateInterval(qb, 'created_at', startDate, endDate);
+    return qb.getMany();
   }
 }
