@@ -13,7 +13,7 @@ export class PersonService extends GenericCrud<PersonEntity> {
     @InjectRepository(PersonEntity)
     private readonly personRepository: Repository<PersonEntity>,
   ) {
-    super(personRepository);
+    super(personRepository, 'Person');
   }
   /* find(options?: FindManyOptions<PersonEntity>) {
     return this.personRepository.find();

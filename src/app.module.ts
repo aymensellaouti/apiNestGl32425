@@ -8,9 +8,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonEntity } from './person/person/person.entity';
 import { FirstMiddleware } from './middleware/first/first.middleware';
 import { PersonController } from './person/person.controller';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { CommonModule } from './common/common.module';
 @Module({
   imports: [
     FirstModule,
+    CommonModule,
     PersonModule,
     TypeOrmModule.forRoot({
       type: 'mysql',

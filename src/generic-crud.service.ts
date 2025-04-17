@@ -1,16 +1,31 @@
-import { NotFoundException } from '@nestjs/common';
-import { FindManyOptions, Repository } from 'typeorm';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  Optional,
+} from '@nestjs/common';
+import { Entity, FindManyOptions, Repository } from 'typeorm';
 import { CrudInterface } from './crud.interface';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
-export abstract class GenericCrud<Entity> implements CrudInterface<Entity> {
-  constructor(private repository: Repository<Entity>) {}
+@Injectable()
+export class GenericCrud<Entity> implements CrudInterface<Entity> {
+  constructor(private repository: Repository<Entity>, private eventSuffix: string = 'Entity') {}
+
+  @Inject(EventEmitter2) eventEmitter: EventEmitter2;
 
   find(options?: FindManyOptions<Entity>): Promise<Entity[]> {
     return this.repository.find(options);
   }
 
-  create(addEntity): Promise<Entity> {
-    return this.repository.save(addEntity);
+  async create(addEntity): Promise<Entity> {
+    const newEntity = await this.repository.save(addEntity);
+    console.log('Emmiting');
+    
+    console.log(`add ${Entity.constructor.name}}`);
+    
+    this.eventEmitter.emit(`add ${this.eventSuffix}`, { entity: newEntity });
+    return newEntity;
   }
   async update(id, updateEntityDto) {
     const newPerson = await this.repository.preload({
