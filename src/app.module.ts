@@ -10,6 +10,7 @@ import { FirstMiddleware } from './middleware/first/first.middleware';
 import { PersonController } from './person/person.controller';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CommonModule } from './common/common.module';
+import { MessagesGateway } from './messages/messages.gateway';
 @Module({
   imports: [
     FirstModule,
@@ -29,7 +30,7 @@ import { CommonModule } from './common/common.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, RANDOM_STRING_PROVIDER],
+  providers: [AppService, RANDOM_STRING_PROVIDER, MessagesGateway],
   exports: [],
 })
 export class AppModule implements NestModule {
