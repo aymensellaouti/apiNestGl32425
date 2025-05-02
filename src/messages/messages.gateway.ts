@@ -39,9 +39,14 @@ export class MessagesGateway implements OnModuleInit{
 
   @SubscribeMessage('addMessage')
   addMessage(client: any, @MessageBody() createMessageDto: CreateMessageDto): any {
-    const id = this.messges[this.messges.length - 1].id + 1;
+    let id = 1;
+    if (this.messges.length) {
+      id = this.messges[this.messges.length - 1].id + 1;
+    }
     const {user, content} = createMessageDto;
+    
     const newMessage = {id, user, content};
+    
     this.messges.push(newMessage);
     this.server.emit('new-message', newMessage)
     return this.messges;

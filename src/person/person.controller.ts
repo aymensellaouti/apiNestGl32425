@@ -28,7 +28,7 @@ export class PersonController {
   @Sse('sse')
   sse(): Observable<MessageEvent> {
     console.log('Calling SSE');
-    
+    // Subscriber
     return fromEvent(this.eventEmitter, `add Person`).pipe(
       map((payload) => {
         console.log('From SSE');

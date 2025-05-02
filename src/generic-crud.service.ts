@@ -23,7 +23,8 @@ export class GenericCrud<Entity> implements CrudInterface<Entity> {
     console.log('Emmiting');
     
     console.log(`add ${Entity.constructor.name}}`);
-    
+    // Haw kol ma tssir ajout fel DB on va déclenché un event add entityName ou bech n7otou fih comme
+    // payload el entity eli tzadet  
     this.eventEmitter.emit(`add ${this.eventSuffix}`, { entity: newEntity });
     return newEntity;
   }
